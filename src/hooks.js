@@ -71,3 +71,14 @@ export const useDebounce = (value, delay = 500) => {
 
   return debouncedValue;
 };
+
+export const useSearchForm = () => {
+  const [searchValue, setSearchValue] = useState("");
+
+  const onSearchChange = (e) => setSearchValue(e.target.value);
+
+  return {
+    searchValue,
+    onSearchChange,
+  };
+};
