@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Autocomplete from "react-autocomplete";
+import { useSearch, useDebounce } from "./hooks";
 
 function App() {
+  const [value, setValue] = useState("");
+
+  const { articles } = useSearch(useDebounce(value));
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Autocomplete
+      getItemValue={(item) => item.label}
+      items={articles}
+      renderItem={(item, isHighlighted) => (
+        <div key={item.id} style={{ background: isHighlighted ? "lightgray" : "white" }}>
+          {item.label}
+        </div>
+      )}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      onSelect={(val) => setValue(val)}
+    />
   );
 }
 
